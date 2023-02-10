@@ -32,8 +32,6 @@ class Util {
         //Toma las propiedades de la clase:     //https://www.php.net/manual/es/reflectionclass.getproperties.php
         $properties = $reflection->getProperties();
 
-       
-
         //$key es clave numérica, $property es un objeto ReflectionProperty https://www.php.net/manual/es/class.reflectionproperty.php#reflectionproperty.constants.modifiers
 
         $claves_obj = array_keys($obj_como_array_asoc);
@@ -62,14 +60,19 @@ class Util {
         }
         return $instance;
     }
-    
-     public static function stringToDateTimeISO8601($cadena): DateTimeImmutable {
+
+    public static function stringToDateTimeISO8601($cadena): DateTimeImmutable {
         if (($date = DateTimeImmutable::createFromFormat('Y-m-d', $cadena)) !== false) {
             return $date;
         } else {
             echo "La conversión a date de $cadena no ha sido un éxito <br/>";
         }
         return null;
+    }
+
+    public static function isNotEmpty($name): bool {
+
+        return (trim($name) !== "");
     }
 
 }
