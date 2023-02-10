@@ -12,6 +12,16 @@
  */
 class PublisherRepository extends BaseRepository {
 
+     public function __construct() {
+     
+       parent::__construct();
+        $this->table_name="publishers";
+        $this->pk_name="publisher_id";
+        $this->class_name="Publisher";
+        $this->default_order_column="name";
+    }
+    
+    
     public function create($publisher) {
 
         $pdostmt = $this->conn->prepare
