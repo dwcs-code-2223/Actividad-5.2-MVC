@@ -10,7 +10,7 @@
  *
  * @author mfernandez
  */
-class BookRepository extends BaseRepository {
+class BookRepository extends BaseRepository implements IBookRepository{
 
    // private MyPDO $conn;
 
@@ -22,7 +22,7 @@ class BookRepository extends BaseRepository {
         $this->class_name="Book";
     }
 
-    function getLibrosYAutoresAgrupadosFetchAll() {
+   public function getLibrosYAutoresAgrupadosFetchAll() :array{
 
         $pdostmt = $this->conn->query('SELECT b.title,'
                 . ' GROUP_CONCAT(COALESCE(a.first_name,\'\'),  COALESCE(\' \'+a.middle_name+\' \', \' \' ),    COALESCE(a.last_name, \'\') SEPARATOR \', \') as name'
@@ -36,24 +36,24 @@ class BookRepository extends BaseRepository {
         return $array;
     }
 
-    function getEditores() {
-        $pdostmt = $this->conn->query('SELECT publisher_id, name ' .
-                ' FROM publishers ORDER BY name');
-        $array = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
-        return $array;
-    }
+//    function getEditores() {
+//        $pdostmt = $this->conn->query('SELECT publisher_id, name ' .
+//                ' FROM publishers ORDER BY name');
+//        $array = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+//        return $array;
+//    }
 
-    function getAutores() {
-        $pdostmt = $this->conn->query('SELECT author_id, '
-                . 'CONCAT (COALESCE(a.first_name,\'\'), '
-                . 'COALESCE(\' \'+a.middle_name+\' \', \' \' ),'
-                . 'COALESCE(a.last_name, \'\') ) as author ' .
-                ' FROM authors a ORDER BY a.first_name');
-        $array = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
-        return $array;
-    }
+//    function getAutores() {
+//        $pdostmt = $this->conn->query('SELECT author_id, '
+//                . 'CONCAT (COALESCE(a.first_name,\'\'), '
+//                . 'COALESCE(\' \'+a.middle_name+\' \', \' \' ),'
+//                . 'COALESCE(a.last_name, \'\') ) as author ' .
+//                ' FROM authors a ORDER BY a.first_name');
+//        $array = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+//        return $array;
+//    }
 
-    function buscarPorAutorOTitulo($cadena) {
+    public function buscarPorAutorOTitulo($cadena):array {
         $pdostmt = $this->conn->prepare(
                 'SELECT T.title, T.name FROM ('
                 . 'SELECT b.title,'
@@ -75,7 +75,7 @@ class BookRepository extends BaseRepository {
     }
 
     //Varias palabras
-    function buscarPorAutorOTituloPalabras($cadena) {
+    public function buscarPorAutorOTituloPalabras($cadena):array {
         $palabrasArray = explode(" ", $cadena);
 
         function filtrarEspacios(string $palabra): bool {

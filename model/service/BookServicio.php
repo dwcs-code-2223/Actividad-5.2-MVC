@@ -12,7 +12,7 @@
  */
 class BookServicio {
 
-    private IBaseRepository $book_repository;
+    private IBookRepository $book_repository;
     private IBaseRepository $pub_repository;
     private IBaseRepository $author_repository;
 
