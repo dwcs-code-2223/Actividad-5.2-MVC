@@ -18,4 +18,6 @@ interface IBaseRepository {
     public function update($object): bool;
 
     public function delete($id): bool;
+    
+    public function findAll(): array ;
 }

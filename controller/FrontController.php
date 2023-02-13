@@ -1,5 +1,5 @@
 <?php
-ob_start();
+ ob_start();
 
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'config/config.php';
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'includes/autoload.php';

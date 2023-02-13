@@ -11,6 +11,7 @@
  * @author mfernandez
  */
 class Publisher {
+    use ViewData;
 
     private $publisher_id;
     private $name;

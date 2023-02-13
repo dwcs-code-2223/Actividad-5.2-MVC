@@ -30,8 +30,23 @@
 </div>
 </form>
 
-<?php 
-if (isset($dataToView["data"])) {
-    echo $dataToView["data"];
-}
-?>
+<?php if (isset($dataToView["data"]) && ($dataToView["data"]->getStatus() === Util::OPERATION_OK)): ?>
+    <div class="alert alert-success my-3" role="alert" >
+        El/La autor/a se ha creado correctamente
+    </div>
+
+<?php elseif (isset($dataToView["data"]) && ($dataToView["data"]->getStatus() === Util::OPERATION_NOK)): ?>
+    <div class="alert alert-danger my-3" role="alert">
+        Ha ocurrido un error y no se ha podido crear el/la autor/a.
+        <br/>
+
+        <?php
+        if (count($dataToView["data"]->getErrors()) > 0) {
+            $errors = $dataToView["data"]->getErrors();
+            foreach ($errors as $msg) {
+                echo "$msg <br/>";
+            }
+        }
+        ?>
+    </div>
+<?php endif; ?>

@@ -53,5 +53,17 @@ abstract class BaseRepository implements IBaseRepository {
 
         return ($pdostmt->rowCount() == 1);
     }
+    
+    
+     public function findAll(): array {
+        $pdostmt = $this->conn->prepare("SELECT *  FROM $this->table_name ORDER BY :orderCriteria");
+        $pdostmt->bindParam("orderCriteria", $this->default_order_column);
+        
+        $pdostmt->debugDumpParams();
+        $pdostmt->execute();
+        $pdostmt->debugDumpParams();
+        $array = $pdostmt->fetchAll(PDO::FETCH_CLASS, $this->class_name);
+        return $array;
+    }
 
 }

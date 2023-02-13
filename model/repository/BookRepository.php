@@ -209,5 +209,16 @@ class BookRepository extends BaseRepository {
             return null;
         }
     }
+    
+    
+    public function addAuthorToBook($book_id, $author_id): bool {
+        $pdostmt = $this->conn->prepare("INSERT INTO book_authors(author_id, book_id) VALUES (:author_id, :book_id)");
+       // $pdostmt->debugDumpParams();
+        $pdostmt->bindValue("book_id", $book_id);
+        $pdostmt->bindValue("author_id", $author_id);
+        $pdostmt->execute();
+        //$pdostmt->debugDumpParams();
+        return ($pdostmt->rowCount() == 1);
+    }
 
 }

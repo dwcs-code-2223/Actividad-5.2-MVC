@@ -30,4 +30,34 @@ class BookServicio {
         return $this->author_repository->create($author);
     }
 
+    public function getPublishers() {
+        return $this->pub_repository->findAll();
+    }
+
+    public function getAuthors() {
+        return $this->author_repository->findAll();
+    }
+
+    public function addBook(Book $book, $authors) {
+        $exito = true;
+      
+
+        try {
+            $book = $this->book_repository->create($book);
+
+            if (isset($authors) && count($authors) > 0):
+                foreach ($authors as $author_id):
+                    $exito = $exito && $this->book_repository->addAuthorToBook($book->getBook_id(), 77);
+                    if (!$exito):
+                        break;
+                    endif;
+                endforeach;
+            endif;
+        } catch (Exception $ex) {
+            echo "Ha ocurrido una exception: " . $ex->getMessage();
+            $exito=false;
+        }
+        return ($book != null) && $exito;
+    }
+
 }

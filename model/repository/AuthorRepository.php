@@ -47,5 +47,21 @@ class AuthorRepository extends BaseRepository {
     public function update($object): bool {
         //TO DO
     }
+    
+   
+    
+    public function findAll(): array {
+       $pdostmt = $this->conn->prepare("SELECT author_id, "
+                . "CONCAT (COALESCE(a.last_name, ''), ' ', COALESCE(a.first_name,''), ' ',"
+                . "COALESCE(a.middle_name, '' )) as completeName " .
+                " FROM authors a ORDER BY $this->default_order_column");
+     
+        $pdostmt->execute();
+        $pdostmt->debugDumpParams();
+        //Se añadió un nuevo atributo en Author.php: $completeName
+        $array = $pdostmt->fetchAll(PDO::FETCH_CLASS, $this->class_name);
+        return $array;
+    }
+
 
 }

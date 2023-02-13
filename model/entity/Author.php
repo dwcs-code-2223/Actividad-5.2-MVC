@@ -11,6 +11,8 @@
  * @author mfernandez
  */
 class Author {
+    use ViewData;
+    
      private $author_id;
    private $first_name;
    private $last_name;

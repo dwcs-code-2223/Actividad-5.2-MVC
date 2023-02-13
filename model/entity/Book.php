@@ -11,15 +11,37 @@
  * @author wadmin
  */
 class Book {
+    
+    use AddBookViewData;
+    
     public int $book_id;
     public string $title;
     public ?string $isbn;
     public ?int $publisher_id;
     public  $published_date;
     
-     public ?string $autores;
-    
-    
+   
+     
+//     private $publishers;
+//     private $authors;
+     
+//     public function getPublishers() {
+//         return $this->publishers;
+//     }
+//
+//     public function getAuthors() {
+//         return $this->authors;
+//     }
+//
+//     public function setPublishers($publishers): void {
+//         $this->publishers = $publishers;
+//     }
+//
+//     public function setAuthors($authors): void {
+//         $this->authors = $authors;
+//     }
+
+         
     public function getBook_id(): int {
         return $this->book_id;
     }
@@ -40,9 +62,6 @@ class Book {
         return $this->published_date;
     }
 
-    public function getAutores(): ?string {
-        return $this->autores;
-    }
 
     public function setBook_id(int $book_id): void {
         $this->book_id = $book_id;
@@ -64,9 +83,6 @@ class Book {
         $this->published_date = $published_date;
     }
 
-    public function setAutores(?string $autores): void {
-        $this->autores = $autores;
-    }
 
         
    
