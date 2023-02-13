@@ -18,12 +18,14 @@ abstract class BaseRepository implements IBaseRepository {
     protected string $class_name;
 
     public function __construct() {
-        $this->conn = new MyPDO();
+        // $this->conn = new MyPDO();
+        $this->conn = ConnectionFactory::getConnection();
     }
 
     abstract public function create($object);
 
     public function read($id) {
+
         $pdostmt = $this->conn->prepare("SELECT * FROM $this->table_name "
                 . "WHERE $this->pk_name = :id");
         $pdostmt->bindValue("id", $id);
@@ -40,16 +42,23 @@ abstract class BaseRepository implements IBaseRepository {
 //abstract public function delete($id): bool;
 
     public function delete($id): bool {
-        $pdostmt = $this->conn->prepare(
-                "DELETE FROM " . $this->table_name . " WHERE " . $this->pk_name
-                . " = :id");
-//"DELETE FROM :table_name  WHERE :pk_name = :id");
-//        $pdostmt->bindParam("table_name", $this->table_name);
-//        $pdostmt->bindParam("pk_name", $this->pk_name);
-        $pdostmt->bindValue("id", $id);
 
-        $pdostmt->debugDumpParams();
-        $pdostmt->execute();
+        try {
+
+            $pdostmt = $this->conn->prepare(
+                    "DELETE FROM " . $this->table_name . " WHERE " . $this->pk_name
+                    . " = :id");
+
+            $pdostmt->bindValue("id", $id);
+
+            $pdostmt->debugDumpParams();
+            $resultado = $pdostmt->execute();
+        } catch (Exception $ex) {
+            echo "Ha ocurrido una exception en delete: <br/> " . $ex->getMessage();
+
+            print_r($pdostmt->errorInfo());
+            throw $ex;
+        }
 
         return ($pdostmt->rowCount() == 1);
     }

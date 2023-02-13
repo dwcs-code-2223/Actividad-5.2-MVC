@@ -62,6 +62,8 @@ class AuthorRepository extends BaseRepository {
         $array = $pdostmt->fetchAll(PDO::FETCH_CLASS, $this->class_name);
         return $array;
     }
-
+    
+    
+ 
 
 }

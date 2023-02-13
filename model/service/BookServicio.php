@@ -58,6 +58,8 @@ class BookServicio {
         try {
             //comenzamos transaction
              $this->book_repository->beginTransaction();
+             
+            //For debug only $this->book_repository->delete(99);
            
                 $book = $this->book_repository->create($book);
 
@@ -74,8 +76,10 @@ class BookServicio {
                $this->book_repository->commit();
             
         } catch (Exception $ex) {
-            echo "Ha ocurrido una exception: " . $ex->getMessage();
+            echo "Ha ocurrido una exception: <br/> " . $ex->getMessage();
+        
             $this->book_repository->rollback();
+          
             $exito = false;
         }
         return ($book != null) && $exito;
