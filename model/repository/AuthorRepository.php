@@ -57,7 +57,7 @@ class AuthorRepository extends BaseRepository {
                 " FROM authors a ORDER BY $this->default_order_column");
      
         $pdostmt->execute();
-        $pdostmt->debugDumpParams();
+     //   $pdostmt->debugDumpParams();
         //Se añadió un nuevo atributo en Author.php: $completeName
         $array = $pdostmt->fetchAll(PDO::FETCH_CLASS, $this->class_name);
         return $array;

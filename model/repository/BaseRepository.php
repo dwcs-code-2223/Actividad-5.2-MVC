@@ -51,7 +51,7 @@ abstract class BaseRepository implements IBaseRepository {
 
             $pdostmt->bindValue("id", $id);
 
-            $pdostmt->debugDumpParams();
+           // $pdostmt->debugDumpParams();
             $resultado = $pdostmt->execute();
         } catch (Exception $ex) {
             echo "Ha ocurrido una exception en delete: <br/> " . $ex->getMessage();
@@ -67,9 +67,9 @@ abstract class BaseRepository implements IBaseRepository {
         $pdostmt = $this->conn->prepare("SELECT *  FROM $this->table_name ORDER BY :orderCriteria");
         $pdostmt->bindParam("orderCriteria", $this->default_order_column);
 
-        $pdostmt->debugDumpParams();
+        //$pdostmt->debugDumpParams();
         $pdostmt->execute();
-        $pdostmt->debugDumpParams();
+        //$pdostmt->debugDumpParams();
         $array = $pdostmt->fetchAll(PDO::FETCH_CLASS, $this->class_name);
         return $array;
     }

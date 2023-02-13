@@ -68,7 +68,7 @@ class BookRepository extends BaseRepository implements IBookRepository{
         $pdostmt->bindParam(1, $criterio);
         $pdostmt->bindParam(2, $criterio);
         $pdostmt->execute();
-        $pdostmt->debugDumpParams();
+       // $pdostmt->debugDumpParams();
 
         $array = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $array;
