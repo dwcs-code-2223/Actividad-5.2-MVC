@@ -44,5 +44,17 @@ class PublisherRepository extends BaseRepository {
     public function update($object): bool {
         //TO DO
     }
+    
+    public function exists($name){
+        $pdostmt = $this->conn->prepare
+                ("SELECT publisher_id FROM publishers WHERE name LIKE :nombre ");
+        $pdostmt->bindValue("nombre", $name);
+
+        $pdostmt->execute();
+
+        //Recuperamos el id de la última inserción
+       $resultado = $pdostmt->fetch(PDO::FETCH_ASSOC);
+       return $resultado;
+    }
 
 }

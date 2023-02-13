@@ -29,7 +29,7 @@ abstract class BaseRepository implements IBaseRepository {
         $pdostmt->bindValue("id", $id);
         $pdostmt->execute();
 
-        //Llama al constructor después de establecer las propiedades. No usa los métodos setters
+//Llama al constructor después de establecer las propiedades. No usa los métodos setters
         $object = $pdostmt->fetchObject($this->class_name);
 
         return $object;
@@ -37,13 +37,13 @@ abstract class BaseRepository implements IBaseRepository {
 
     abstract public function update($object): bool;
 
-    //abstract public function delete($id): bool;
+//abstract public function delete($id): bool;
 
     public function delete($id): bool {
         $pdostmt = $this->conn->prepare(
                 "DELETE FROM " . $this->table_name . " WHERE " . $this->pk_name
                 . " = :id");
-        //"DELETE FROM :table_name  WHERE :pk_name = :id");
+//"DELETE FROM :table_name  WHERE :pk_name = :id");
 //        $pdostmt->bindParam("table_name", $this->table_name);
 //        $pdostmt->bindParam("pk_name", $this->pk_name);
         $pdostmt->bindValue("id", $id);
@@ -53,17 +53,31 @@ abstract class BaseRepository implements IBaseRepository {
 
         return ($pdostmt->rowCount() == 1);
     }
-    
-    
-     public function findAll(): array {
+
+    public function findAll(): array {
         $pdostmt = $this->conn->prepare("SELECT *  FROM $this->table_name ORDER BY :orderCriteria");
         $pdostmt->bindParam("orderCriteria", $this->default_order_column);
-        
+
         $pdostmt->debugDumpParams();
         $pdostmt->execute();
         $pdostmt->debugDumpParams();
         $array = $pdostmt->fetchAll(PDO::FETCH_CLASS, $this->class_name);
         return $array;
+    }
+
+    public function beginTransaction(): bool {
+
+        return $this->conn->beginTransaction();
+    }
+
+    public function commit(): bool {
+
+        return $this->conn->commit();
+    }
+
+    public function rollback(): bool {
+
+        return $this->conn->rollback();
     }
 
 }

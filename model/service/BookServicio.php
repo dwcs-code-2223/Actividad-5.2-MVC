@@ -22,8 +22,22 @@ class BookServicio {
         $this->author_repository = new AuthorRepository();
     }
 
-    public function addPublisher(Publisher $publisher): Publisher {
-        return $this->pub_repository->create($publisher);
+    public function addPublisher(Publisher $publisher): ?Publisher {
+
+        try {
+
+            if ($this->pub_repository->exists($publisher->getName())) {
+                $publisher->setStatus(Util::OPERATION_NOK);
+                $publisher->addError("Ya existe una editorial con ese nombre");
+            } else {
+                $publisher = $this->pub_repository->create($publisher);
+                $publisher->setStatus(Util::OPERATION_OK);
+            }
+        } catch (\Exception $ex) {
+            echo "Ha ocurrido una excepción: " . $ex->getMessage();
+            $publisher = null;
+        }
+        return $publisher;
     }
 
     public function addAuthor(Author $author): Author {
@@ -40,22 +54,29 @@ class BookServicio {
 
     public function addBook(Book $book, $authors) {
         $exito = true;
-      
 
         try {
-            $book = $this->book_repository->create($book);
+            //comenzamos transaction
+             $this->book_repository->beginTransaction();
+           
+                $book = $this->book_repository->create($book);
 
-            if (isset($authors) && count($authors) > 0):
-                foreach ($authors as $author_id):
-                    $exito = $exito && $this->book_repository->addAuthorToBook($book->getBook_id(), 77);
-                    if (!$exito):
-                        break;
-                    endif;
-                endforeach;
-            endif;
+                if (isset($authors) && count($authors) > 0):
+                    foreach ($authors as $author_id):
+                        $exito = $exito && $this->book_repository->addAuthorToBook($book->getBook_id(), $author_id);
+                        if (!$exito):
+                            break;
+                        endif;
+                    endforeach;
+                endif;
+
+                //confirmamos la transaction
+               $this->book_repository->commit();
+            
         } catch (Exception $ex) {
             echo "Ha ocurrido una exception: " . $ex->getMessage();
-            $exito=false;
+            $this->book_repository->rollback();
+            $exito = false;
         }
         return ($book != null) && $exito;
     }

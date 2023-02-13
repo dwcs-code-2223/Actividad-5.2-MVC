@@ -35,10 +35,10 @@ class BookController {
             if (trim($publisher) !== "") {
                 $publisher_obj = new Publisher();
                 $publisher_obj->setName($publisher);
+           
                 $obj_guardado = $this->bookServicio->addPublisher($publisher_obj);
-                if ($obj_guardado != null) {
-                    $obj_guardado->setStatus(Util::OPERATION_OK);
-                } else {
+                if ($obj_guardado == null) {
+                    $obj_guardado = new Publisher();
                     $obj_guardado->setStatus(Util::OPERATION_NOK);
                 }
             } else {
