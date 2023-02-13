@@ -20,28 +20,20 @@ class Book {
     public ?int $publisher_id;
     public  $published_date;
     
-   
-     
-//     private $publishers;
-//     private $authors;
-     
-//     public function getPublishers() {
-//         return $this->publishers;
-//     }
+    //Si usáseis POO estricta
+//    private $autores; //array de objetos Autor
+//    
+//   
 //
-//     public function getAuthors() {
-//         return $this->authors;
-//     }
+//    public function getAutores() {
+//        return $this->autores;
+//    }
 //
-//     public function setPublishers($publishers): void {
-//         $this->publishers = $publishers;
-//     }
-//
-//     public function setAuthors($authors): void {
-//         $this->authors = $authors;
-//     }
+//    public function setAutores($autores): void {
+//        $this->autores = $autores;
+//    }
 
-         
+             
     public function getBook_id(): int {
         return $this->book_id;
     }

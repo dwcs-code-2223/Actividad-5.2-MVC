@@ -10,7 +10,7 @@
  *
  * @author mfernandez
  */
-class PublisherRepository extends BaseRepository {
+class PublisherRepository extends BaseRepository implements IPublisherRepository{
 
      public function __construct() {
      
@@ -45,7 +45,7 @@ class PublisherRepository extends BaseRepository {
         //TO DO
     }
     
-    public function exists($name){
+    public function exists($name):bool{
         $pdostmt = $this->conn->prepare
                 ("SELECT publisher_id FROM publishers WHERE name LIKE :nombre ");
         $pdostmt->bindValue("nombre", $name);

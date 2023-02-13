@@ -10,7 +10,9 @@
  *
  * @author mfernandez
  */
-class AuthorRepository extends BaseRepository {
+class AuthorRepository extends
+BaseRepository 
+implements IAuthorRepository{
 
     public function __construct() {
         // $this->conn = new MyPDO();

@@ -13,8 +13,8 @@
 class BookServicio {
 
     private IBookRepository $book_repository;
-    private IBaseRepository $pub_repository;
-    private IBaseRepository $author_repository;
+    private IPublisherRepository $pub_repository;
+    private IAuthorRepository $author_repository;
 
     public function __construct() {
         $this->book_repository = new BookRepository();
@@ -41,6 +41,10 @@ class BookServicio {
     }
 
     public function addAuthor(Author $author): Author {
+        
+        //TO DO 
+        //Comprobar que no exista ya un autor con los mismos datos
+        //Como en Publisher
         return $this->author_repository->create($author);
     }
 
@@ -59,7 +63,8 @@ class BookServicio {
             //comenzamos transaction
              $this->book_repository->beginTransaction();
              
-            //For debug only $this->book_repository->delete(99);
+            //For debug only 
+            //$this->book_repository->delete(99);
            
                 $book = $this->book_repository->create($book);
 

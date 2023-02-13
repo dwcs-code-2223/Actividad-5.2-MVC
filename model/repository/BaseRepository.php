@@ -16,6 +16,7 @@ abstract class BaseRepository implements IBaseRepository {
     protected string $pk_name;
     protected MyPDO $conn;
     protected string $class_name;
+    protected string  $default_order_column;
 
     public function __construct() {
         // $this->conn = new MyPDO();
@@ -54,7 +55,7 @@ abstract class BaseRepository implements IBaseRepository {
            // $pdostmt->debugDumpParams();
             $resultado = $pdostmt->execute();
         } catch (Exception $ex) {
-            echo "Ha ocurrido una exception en delete: <br/> " . $ex->getMessage();
+            echo "Ha ocurrido una exception en delete con errorInfo: <br/> " . $ex->getMessage();
 
             print_r($pdostmt->errorInfo());
             throw $ex;
@@ -64,8 +65,8 @@ abstract class BaseRepository implements IBaseRepository {
     }
 
     public function findAll(): array {
-        $pdostmt = $this->conn->prepare("SELECT *  FROM $this->table_name ORDER BY :orderCriteria");
-        $pdostmt->bindParam("orderCriteria", $this->default_order_column);
+        $pdostmt = $this->conn->prepare("SELECT *  FROM $this->table_name ORDER BY $this->default_order_column");
+     
 
         //$pdostmt->debugDumpParams();
         $pdostmt->execute();

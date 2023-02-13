@@ -35,7 +35,7 @@ class BookController {
             if (trim($publisher) !== "") {
                 $publisher_obj = new Publisher();
                 $publisher_obj->setName($publisher);
-           
+
                 $obj_guardado = $this->bookServicio->addPublisher($publisher_obj);
                 if ($obj_guardado == null) {
                     $obj_guardado = new Publisher();
@@ -83,9 +83,8 @@ class BookController {
                     $author->setStatus(Util::OPERATION_NOK);
                 }
             }
-               return $author;
+            return $author;
         }
-     
     }
 
     public function addBook() {
@@ -133,6 +132,17 @@ class BookController {
             $book->setIsbn($isbn);
             $book->setPublished_date($pdate);
             $book->setPublisher_id($pub_Id);
+//Si fuese una relación POO de Book y array de Author
+//            if (isset($_POST["$authors"]) && count($_POST["$authors"]) > 0) {
+//                $authors = $_POST["$authors"];
+//                $array_authors = array();
+//                foreach ($authors as $author_id):
+//                    $author = new Author();
+//                    $author->setAuthor_id($author_id);
+//                    array_push($array_authors, $author);
+//                endforeach;
+//                $book->setAutores($array_authors);
+//            }
 
             $exito = $this->bookServicio->addBook($book, $_POST["authors"]);
             if ($exito) {
