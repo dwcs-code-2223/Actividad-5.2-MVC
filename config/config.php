@@ -2,7 +2,7 @@
 
 /* Default options */
 const DEFAULT_CONTROLLER = "Book";
-const DEFAULT_ACTION = "addBook";
+const DEFAULT_ACTION = "search";
 
 const CONTROLLERS_FOLDER="controller";
 

@@ -89,5 +89,11 @@ class BookServicio {
         }
         return ($book != null) && $exito;
     }
+    
+    
+    public function search($cadena){
+      $resultado=  $this->book_repository->buscarPorAutorOTituloPalabras($cadena);
+      return $resultado;
+    }
 
 }

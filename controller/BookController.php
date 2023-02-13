@@ -157,4 +157,16 @@ class BookController {
         return $book;
     }
 
+    public function search() {
+        $this->view=self::VIEW_FOLDER . DIRECTORY_SEPARATOR . 'search_book';
+        $this->page_title = "Búsqueda de libros por autor o título";
+        if (isset($_GET["search"])) {
+
+            $cadena = $_GET["search"];
+            if (Util::isNotEmpty($cadena)) {
+                return $this->bookServicio->search($cadena);
+            }
+        }
+    }
+
 }
