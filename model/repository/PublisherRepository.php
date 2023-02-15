@@ -54,7 +54,8 @@ class PublisherRepository extends BaseRepository implements IPublisherRepository
 
         //Recuperamos el id de la última inserción
        $resultado = $pdostmt->fetch(PDO::FETCH_ASSOC);
-       return $resultado;
+       return (($resultado!==false) && ( count($resultado)>0));
+       
     }
 
 }
